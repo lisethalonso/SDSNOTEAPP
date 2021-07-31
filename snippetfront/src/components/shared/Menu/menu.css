@@ -1,0 +1,32 @@
+.Menu{
+  position:fixed;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  list-style: none;
+  padding:0;
+  margin:0;
+  background-color: #000;
+  color:#fff;
+  width:100%;
+  font-size: 0.8rem;
+}
+.Menu li{
+  flex:1;
+}
+.Menu li a, .Menu li a:visited{
+  display: flex;
+  padding: 0.95rem 1rem;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color:#fff;
+}
+
+.Menu li a.active {
+  color:#333;
+  background: rgb(221,221,221);
+  background: linear-gradient(180deg, rgba(221,221,221,1) 0%, rgba(255,255,255,1) 85%, rgba(0,0,0,1) 99%);
+}
