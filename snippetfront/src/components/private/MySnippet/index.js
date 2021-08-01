@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useSession} from '../../../hooks/Session';
 import {Link, Redirect} from 'react-router-dom';
 import Page from '../../shared/Page/Page';

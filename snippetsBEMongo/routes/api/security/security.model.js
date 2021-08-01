@@ -15,7 +15,7 @@ let securityCollection;
       }
     }
   } catch (ex) {
-    console.log(ex);b 
+    console.log(ex);
     process.exit(1);
   }
 })();

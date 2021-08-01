@@ -1,14 +1,13 @@
 const MongoDB = require('../../utilities/db');
-const ObjectId = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectId; //
 let db;
-let snippetCollection;
+let notasCollection;
 
-//se ejecuta cuando se manda a require(este archivo)
 (async function(){
     try{
-      if (!snippetCollection) {
+      if (!notasCollection) {
         db = await MongoDB.getDB();
-        snippetCollection = db.collection("snippets");
+        notasCollection = db.collection("notas");
         if(process.env.ENSURE_INDEX == 1){
           // Vamos a asegurarnos de que exista el indice
         }
@@ -17,17 +16,17 @@ let snippetCollection;
       console.log(ex);
       process.exit(1);
     }
-})();
+})(); //Autollamado de una funcion anonima
 
 module.exports.getAll = async ()=>{
-  try {
-    let docsCursor = snippetCollection.find({});
-    let rows = await docsCursor.toArray()
-    return rows;
-  } catch(ex){
-    console.log(ex);
-    throw(ex);
-  }
+    try {
+      let docsCursor = notasCollection.find({});
+      let rows = await docsCursor.toArray()
+      return rows;
+    } catch(ex){
+      console.log(ex);
+      throw(ex);
+    }
 }
 
 module.exports.getAllFacet = async (page, itemsPerPage) => {
@@ -39,7 +38,7 @@ module.exports.getAllFacet = async (page, itemsPerPage) => {
       sort:[["name", 1]]
     };
 
-    let docsCursor = snippetCollection.find({}, options);
+    let docsCursor = notasCollection.find({}, options);
     let rownum = await docsCursor.count();
     let rows = await docsCursor.toArray()
     return {rownum, rows};
@@ -52,24 +51,24 @@ module.exports.getAllFacet = async (page, itemsPerPage) => {
 module.exports.getById = async (id)=>{
   try {
     const _id = new ObjectId(id);
-    const filter =  {_id: _id};
-    let row = await snippetCollection.findOne(filter);
+    const filter = {_id: _id};
+    let row = await notasCollection.findOne(filter);
     return row;
-  } catch(ex){
+  } catch (ex) {
     console.log(ex);
     throw(ex);
   }
 }
 
 module.exports.getBySales = async (sales)=>{
-  try{
+  try {
     const filter = {sales:sales};
-    let cursor = snippetCollection.find(filter);
+    let cursor = notasCollection.find(filter);
     let rows = await cursor.toArray();
     return rows;
-  }catch(ex){
+  } catch (ex) {
     console.log(ex);
-    throw (ex);
+    throw(ex);
   }
 }
 
@@ -94,7 +93,7 @@ module.exports.getBySalesWithOperator = async (sales, operator) => {
         break;
     }
     const filter = { sales: mongoOperator };
-    let cursor = snippetCollection.find(filter);
+    let cursor = notasCollection.find(filter);
     let rows = await cursor.toArray();
     return rows;
   } catch (ex) {
@@ -110,7 +109,7 @@ module.exports.getBySalesRange = async (lowerLimit, upperLimit, includeExtremes)
         {"$gt":lowerLimit, "$lt":upperLimit}
     ;
     const filter = { sales: range };
-    let cursor = snippetCollection.find(filter);
+    let cursor = notasCollection.find(filter);
     let rows = await cursor.toArray();
     return rows;
   } catch (ex) {
@@ -119,25 +118,28 @@ module.exports.getBySalesRange = async (lowerLimit, upperLimit, includeExtremes)
   }
 }
 
-module.exports.addOne = async (name, snippet, user)=>{
-  try{
-    let newSnippet = {
-      name:name,
-      snippet:snippet,
-      user:user
-    };
-    let result = await snippetCollection.insertOne(newSnippet);
-    return result.ops;
-  }catch(ex){
-    console.log(ex);
-    throw(ex);
-  }
-
+module.exports.addNota = async (titulo, descripcion, palabrasClave, user)=>{
+  const fecha = new Date().getTime();
+    try{
+      let newNota = {
+        titulo: titulo,
+        descripcion: descripcion,
+        palabrasClave: palabrasClave.split(","),
+        fechaCreacion: fecha,
+        user:user
+      };
+      let result = await notasCollection.insertOne(newNota);
+      return result.ops;
+    }catch(ex){
+      console.log(ex);
+      throw(ex);
+    }
+  
 }
 
 module.exports.addAny = async (document) => {
   try {
-    let result = await snippetCollection.insertOne(document);
+    let result = await notasCollection.insertOne(document);
     return result.ops;
   } catch (ex) {
     console.log(ex);
@@ -150,7 +152,7 @@ module.exports.addKeyword = async (id, keyword) =>{
     const _id = new ObjectId(id);
     const filter = {"_id": _id};
     const updateObj = {"$push":{"keywords": keyword}};
-    let result = await snippetCollection.updateOne(filter, updateObj);
+    let result = await notasCollection.updateOne(filter, updateObj);
     return result;
   } catch(ex) {
     console.log(ex);
@@ -163,7 +165,7 @@ module.exports.addKeywords = async (id, keywords) => {
     const _id = new ObjectId(id);
     const filter = { "_id": _id };
     const updateObj = { "$set": { "keywords": keywords.split(",") } };
-    let result = await snippetCollection.updateOne(filter, updateObj);
+    let result = await notasCollection.updateOne(filter, updateObj);
     return result;
   } catch (ex) {
     console.log(ex);
@@ -174,7 +176,7 @@ module.exports.addKeywords = async (id, keywords) => {
 module.exports.getByKeyword = async (keyword) => {
   try {
     const filter = { "keywords": keyword };
-    let cursor = snippetCollection.find(filter);
+    let cursor = notasCollection.find(filter);
     let rows = await cursor.toArray();
     return rows;
   } catch (ex) {
@@ -186,7 +188,7 @@ module.exports.getByKeyword = async (keyword) => {
 module.exports.getByCommentUser = async (email)=>{
   try{
     const filter = {"comments.email": email};
-    let cursor = snippetCollection.find(filter, { projection:{name:1, sales:1} });
+    let cursor = notasCollection.find(filter, { projection:{name:1, sales:1} });
     let rows = await cursor.toArray();
     return rows;
   }catch(ex){
@@ -199,7 +201,7 @@ module.exports.deleteById = async (id) => {
   try {
     const _id = new ObjectId(id);
     const filter = { _id: _id };
-    let row = await snippetCollection.deleteOne(filter);
+    let row = await notasCollection.deleteOne(filter);
     return row;
   } catch (ex) {
     console.log(ex);
@@ -233,7 +235,7 @@ module.exports.getSalesFreq = async () => {
       {"$limit": 5}
     );
 
-    let cursor = snippetCollection.aggregate(pipeline);
+    let cursor = notasCollection.aggregate(pipeline);
     let rows = await cursor.toArray();
     return rows;
   } catch(ex){
@@ -258,7 +260,7 @@ module.exports.getCommentByDate = async ()=>{
         }
       }
     }];
-    let cursor = snippetCollection.aggregate(pipeline);
+    let cursor = notasCollection.aggregate(pipeline);
     let rows = await cursor.toArray();
     return rows;
   } catch(ex){
@@ -269,22 +271,19 @@ module.exports.getCommentByDate = async ()=>{
 
 module.exports.getSnippetsByUser = async (user)=>{
   try {
-    let pipeline = [
-      {
-        "$group": {
-          _id: '$user', 
-          frecuency: {
-            '$sum': 1
-          }
-        }
-      },
-      {
-        "$match": {
-          _id: user
+    let pipeline = [{
+      "$group": {
+        _id: '$user', 
+        frecuency: {
+          '$sum': 1
         }
       }
-    ];
-    let cursor = snippetCollection.aggregate(pipeline);
+    },{
+      "$match": {
+        _id: user
+      }
+    }];
+    let cursor = notasCollection.aggregate(pipeline);
     let rows = await cursor.toArray();
     return rows;
   } catch (ex) {
@@ -293,43 +292,36 @@ module.exports.getSnippetsByUser = async (user)=>{
   }
 }
 
-module.exports.getTopKeywords = async (user) =>{
+module.exports.getTop5KeywordsByUser = async (user)=>{
   try {
-    let pipeline = [
-      {
-        '$match': {
-          user: user
-        }
-      }, 
-      {
-        '$unwind': {
-          path: '$keywords', 
-          includeArrayIndex: 'keywords_index', 
-          preserveNullAndEmptyArrays: false
-        }
-      }, 
-      {
-        '$group': {
-          _id: '$keywords', 
-          total: {
-            '$sum': 1
-          }
-        }
-      }, 
-      {
-        '$sort': {
-          total: -1
-        }
-      }, 
-      {
-        '$limit': 5
+    let pipeline = [{
+      '$match': {
+        'user': user
       }
-    ];
-    let cursor = snippetCollection.aggregate(pipeline);
+    },{
+      '$unwind': {
+        'path': '$keywords', 
+        'includeArrayIndex': 'keywords_index', 
+        'preserveNullAndEmptyArrays': false
+      }
+    },{
+      '$group': {
+        '_id': '$keywords', 
+        'total': {
+          '$sum': 1
+        }
+      }
+    },{
+      '$sort': {
+        'total': -1
+      }
+    },{
+      '$limit': 5
+    }];
+    let cursor = notasCollection.aggregate(pipeline);
     let rows = await cursor.toArray();
     return rows;
-  } 
-  catch (ex) {
+  } catch (ex) {
     console.log(ex);
     throw(ex);
   }
@@ -340,7 +332,9 @@ module.exports.getTotalSalesByUser = async (user)=>{
 
     let pipeline = [
       {
-        "$match":{user:user}
+        "$match":{
+          'user': user
+        }
       },
       {
         "$group": 
@@ -350,7 +344,7 @@ module.exports.getTotalSalesByUser = async (user)=>{
         }
       }
     ];
-    let cursor = snippetCollection.aggregate(pipeline);
+    let cursor = notasCollection.aggregate(pipeline);
     let rows = await cursor.toArray();
     return rows;
   } catch (ex) {
@@ -361,53 +355,31 @@ module.exports.getTotalSalesByUser = async (user)=>{
 
 //   _id: ObjectID("afasdasdccasb102938")
 
-// select sales, count(*) as salesAmount from snippets group by sales;
-
 // Operadores en Mongodb son distintos
 
 /*
 Select * from snippets where sales = 3;
-
 db.snippets.find({sales:3});
-
-
 select * from snippets where sales > 50; greater than 
 select * from snippets where sales < 50; less than
 select * from snippets where sales >= 80; greater than or equal
 select * from snippets where sales <= 40;
-
 db.snippets.find({sales: {$gt : 50} })
 db.snippets.find({sales: {$lt : 50} })
 db.snippets.find({sales: {$gte : 80} })
 db.snippets.find({sales: {$lte : 40} })
-
 select * from snippets where sales > 20 and sales < 30;
-
 db.snippets.find({sales : {$gt:20, $lt:30} });
-
-select count(sales) from snippets;
-
 MySQL
-
 select count(*) from snippets; 
 Pagin 1 50
 select * from snippets limit (1, 50);
 select * from snippets limit (51, 100);
-
 select * from snippets order by sales, name;
-
 0 name , 1 sales
-
 0 sales, 1 name
-
 json (no determina orden)
-
 {name:1, sales:1} === {sales:1, name:1}
-
 ["names", "sales"] !== ["sales", "names"]
-
 0, 1
-
-
-
 */

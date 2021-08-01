@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getAll,
   getAllFacet,
-  addOne,
+  addNota,
   addAny,
   getById,
   getBySales,
@@ -17,8 +17,7 @@ const {
   getSalesFreq,
   getCommentByDate,
   getSnippetsByUser,
-  getTopKeywords,
-  getTotalSalesByUser
+  getTop5KeywordsByUser
 } = require('./snippets.model');
 
 router.get(
@@ -164,12 +163,54 @@ router.get(
   }
 );
 
+router.get(
+  "/getsnippetsbyuser/:user",
+  async (req, res)=>{
+    try{
+      const {user} = req.params;
+      let rows = await getSnippetsByUser(user);
+      res.status(200).json(rows);
+    }catch(ex){
+      console.log(ex);
+      res.status(500).json({ "msg": "Error" });
+    }
+  }
+);
+
+router.get(
+  "/gettopkeywordsbyuser/:user",
+  async (req, res)=>{
+    try{
+      const {user} = req.params;
+      let rows = await getTop5KeywordsByUser(user);
+      res.status(200).json(rows);
+    }catch(ex){
+      console.log(ex);
+      res.status(500).json({ "msg": "Error" });
+    }
+  }
+);
+
+router.get(
+  "/gettotalsalesbyuser/:user",
+  async (req, res)=>{
+    try{
+      const {user} = req.params;
+      let rows = await  getTotalSalesByUser(user);
+      res.status(200).json(rows);
+    }catch(ex){
+      console.log(ex);
+      res.status(500).json({ "msg": "Error" });
+    }
+  }
+);
+
 router.post(
   "/new",
   async (req, res)=>{
     try{
-      let {name, snippet} = req.body;
-      let docInserted = await addOne(name, snippet, req.user._id);
+      let {titulo, descripcion, palabrasClave} = req.body;
+      let docInserted = await addNota(titulo, descripcion, palabrasClave, req.user.email);
       res.status(200).json(docInserted);
     }catch(ex){
       res.status(500).json({"msg":"Error"});
@@ -227,48 +268,6 @@ router.delete(
       let result = await deleteById(id);
       res.status(200).json(result);
     } catch (ex) {
-      res.status(500).json({ "msg": "Error" });
-    }
-  }
-);
-
-router.get(
-  "/getsnippetsbyuser/:user",
-  async (req, res)=>{
-    try{
-      const {user} = req.params;
-      let rows = await getSnippetsByUser(user);
-      res.status(200).json(rows);
-    }catch(ex){
-      console.log(ex);
-      res.status(500).json({ "msg": "Error" });
-    }
-  }
-);
-
-router.get(
-  "/gettopkeywords/:user",
-  async (req, res)=>{
-    try{
-      const {user} = req.params;
-      let rows = await  getTopKeywords(user);
-      res.status(200).json(rows);
-    }catch(ex){
-      console.log(ex);
-      res.status(500).json({ "msg": "Error" });
-    }
-  }
-);
-
-router.get(
-  "/gettotalsalesbyuser/:user",
-  async (req, res)=>{
-    try{
-      const {user} = req.params;
-      let rows = await  getTotalSalesByUser(user);
-      res.status(200).json(rows);
-    }catch(ex){
-      console.log(ex);
       res.status(500).json({ "msg": "Error" });
     }
   }

@@ -20,6 +20,7 @@ import MySnippetsPage from './components/private/MySnippets';
 import MySnippetPage from './components/private/MySnippet';
 import AddSnippetPage from './components/private/AddSnippet';
 import Dashboard from './components/private/Dashboard';
+import Profile from './components/private/Profile';
 
 import './App.css';
 
@@ -39,6 +40,7 @@ function App() {
                   <PrivateRoute exact path="/mysnippet" component={MySnippetPage}></PrivateRoute>
                   <PrivateRoute exact path="/addsnippet" component={AddSnippetPage}></PrivateRoute>
                   <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
+                  <PrivateRoute exact path="/profile" component={Profile}></PrivateRoute>
               </Switch>
               <Menu login={false}></Menu>
           </div>

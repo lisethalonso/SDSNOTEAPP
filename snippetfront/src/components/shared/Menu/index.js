@@ -19,7 +19,7 @@ const Menu = ()=>{
       <ul className="Menu">
         <li><NavLink to="/mysnippets">Snippets</NavLink></li>
         <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-        <li><a >Profile</a></li>
+        <li><NavLink to="/profile">Profile</NavLink></li>
         <li><a >Upload</a></li>
       </ul>
     );

@@ -1,49 +1,76 @@
 import Page from '../../shared/Page/Page';
 import Field from '../../shared/DataField/DataField';
-
-import {useState} from 'react';
+import Button from '../../shared/Buttons/Button';
+import { useState } from 'react';
+import { useSession } from '../../../hooks/Session';
+import { useHistory } from 'react-router-dom';
+import { ADD_NOTA_REGISTRADO } from '../../../store/reducers/addNota';
+import { privateaxios } from '../../../store/axios';
 
 import './AddSnippet.css';
+
 const AddSnippet = ()=> {
-  const [form, setForm] = useState({name: "", snippet: ""});
-  const onChangeHandler = (e)=>{
+  const [titulo, setTitulo] = useState();
+  const [descripcion, setDescripcion] = useState();
+  const [palabrasClave, setPalabrasClave] = useState();
+  const routeHistory = useHistory();
+  let { from } = { from : {pathname:"/mysnippets"}};
+  const [{ addNota, sec }, dispatch] = useSession();
+  let user = sec.user;
+
+  const onClickHandler = async (e)=>{
     e.preventDefault();
     e.stopPropagation();
-    const { name, value } = e.target;
-    console.log(name, value);
-    const newState = {
-      ...form,
-      [name]:value
+    try{
+      const { data } = await privateaxios.post("/api/snippets/new", 
+      {titulo: titulo, descripcion: descripcion, palabrasClave: palabrasClave, user: user.user.email});
+      dispatch({type:ADD_NOTA_REGISTRADO, payload:data});
+      routeHistory.replace(from);
+    } catch(ex){
+      //Dispacth del error
     }
-    setForm(newState);
   }
-  const {name, snippet} = form;
+  
+
   return (
     <Page showHeader title="Nuevo">
       <section>
         <Field
-          name="name"
-          id="name"
-          placeholder="Nombre del Snippet"
+          name="titulo"
+          id="titulo"
+          placeholder="Titulo nota"
           type="text"
-          labelText="Nombre"
-          value={name}
-          onChange={onChangeHandler}
+          labelText="Titulo"
+          value={titulo}
+          onChange={(e)=>{setTitulo(e.target.value)}}
         >
         </Field>
         <Field
-          name="snippet"
-          id="snippet"
-          placeholder="Codigo del Snippet"
+          name="descripcion"
+          id="descripcion"
+          placeholder="Descripcion nota"
           type="textarea"
-          labelText="Nombre"
-          value={snippet}
-          onChange={onChangeHandler}
+          labelText="Descripcion"
+          value={descripcion}
+          onChange={(e)=>setDescripcion(e.target.value)}
           rows="10"
           style={{minHeight:"40vh"}}
         >
         </Field>
+        <Field
+          name="palabrasClave"
+          id="palabrasClave"
+          placeholder="Etiquetas"
+          type="text"
+          labelText="Etiquetas"
+          value={palabrasClave}
+          onChange={(e)=>{setPalabrasClave(e.target.value)}}
+        >
+        </Field>
       </section>
+      <section style={{padding:"1rem"}}>
+          <Button onClick={onClickHandler}>Agregar Nota</Button>
+        </section>
     </Page>
     );
 }
