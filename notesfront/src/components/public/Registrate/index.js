@@ -7,51 +7,53 @@ import { useHistory } from 'react-router-dom';
 import { SIGN_SIGNIN } from '../../../store/reducers/signin';
 import { publicaxios } from '../../../store/axios';
 
-const Signin = ()=>{
-  const [email, setEmail] = useState();
-  const  [pswd, setPassword] = useState();
+const Registrate = ()=>{
+  const [correo, setCorreo] = useState();
+  const  [contrasenia, setContrasenia] = useState();
   const [{ sec }, dispatch] = useSession();
   const routeHistory = useHistory();
-  let { from } = { from : {pathname:"/login"}};
+  let { from } = { from : {pathname:"/iniciarSesion"}};
 
   const onClickHandler = async (e)=>{
     e.preventDefault();
     e.stopPropagation();
-    try{
+    try
+    {
       const { data } = await publicaxios.post(
-      "/api/security/signin",
-      {email:email, pswd:pswd}
+        "/api/seguridad/registrarse",
+        {correo:correo, contrasenia:contrasenia}
       );
       dispatch({ type: SIGN_SIGNIN, payload: data });
       routeHistory.replace(from);
-    } catch(ex){
+    } catch(ex)
+    {
       //Dispacth del error
     }
   };
 
   return (
-    <Page showHeader title="Sign In">
+    <Page showHeader title="Regístrate">
         <DataField
-          labelText="Correo Electrónico"
+          labelText="Correo electrónico"
           type="email"
-          placeholder="correo@electrónico"
-          value={email}
-          name="email"
-          id="email"
-          title="Correo Electrónico"
+          placeholder="example123@gmail.com"
+          value={correo}
+          name="correo"
+          id="correo"
+          title="Correo electrónico"
           error=""
-          onChange={(e)=>{setEmail(e.target.value)}}>
+          onChange={(e)=>{setCorreo(e.target.value)}}>
         </DataField>
         <DataField
           labelText="Contraseña"
           type="password"
-          placeholder="Tu Contraseña"
-          value={pswd}
-          name="pswd"
-          id="pswd"
+          placeholder="Ingrese su contraseña"
+          value={contrasenia}
+          name="contrasenia"
+          id="contrasenia"
           title="Contraseña"
           error=""
-          onChange={(e)=>{ setPassword(e.target.value)}}>
+          onChange={(e)=>{ setContrasenia(e.target.value)}}>
         </DataField>
         <section style={{padding:"1rem"}}>
           <Button onClick={onClickHandler}>Registrarse</Button>
@@ -60,4 +62,4 @@ const Signin = ()=>{
   )
 }
 
-export default Signin;
+export default Registrate;

@@ -11,15 +11,16 @@ const {
 } = require('./notas.model');
 
 router.get(
-  "/obtenerNotasUsuario/:pagina/:cantidad",
+  "/obtenerNotasUsuario/:pagina/:cantidad/:id",
   async (req, res) => {
     try 
     {
-      let {pagina, cantidad} = req.params;
+      let {pagina, cantidad, id} = req.params;
       pagina = parseInt(pagina);
       cantidad = parseInt(cantidad);
-      let resultado = await obtenerNotasUsuarioPorPagina(pagina, cantidad, req.user._id);
+      let resultado = await obtenerNotasUsuarioPorPagina(pagina, cantidad, id);
       res.status(200).json({...resultado, pagina, cantidad});
+      console.log(req.user);
     } 
     catch (ex) 
     {

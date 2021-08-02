@@ -7,6 +7,7 @@ fieldset{
 fieldset label{
   font-weight: bold;
   margin-bottom: 0.5rem;
+  border-radius: 50%;
 }
 
 fieldset input{

@@ -10,17 +10,17 @@ const Menu = ()=>{
   if (!sec.isLogged){
     return (
       <ul className="Menu">
-        <li><NavLink activeClassName="active" to='/login'>Login</NavLink></li>
-        <li><NavLink activeClassName="active" to='/sigin'>Signin</NavLink></li>
+        <li><NavLink activeClassName="active" to='/iniciarSesion'>Iniciar Sesión</NavLink></li>
+        <li><NavLink activeClassName="active" to='/registrate'>Regístrate</NavLink></li>
       </ul>
     );
   }else {
     return (
       <ul className="Menu">
-        <li><NavLink to="/mysnippets">Snippets</NavLink></li>
+        <li><NavLink to="/misNotas">Mis Notas</NavLink></li>
         <li><NavLink to="/dashboard">Dashboard</NavLink></li>
         <li><NavLink to="/profile">Profile</NavLink></li>
-        <li><a >Upload</a></li>
+        <li><a>Upload</a></li>
       </ul>
     );
   }

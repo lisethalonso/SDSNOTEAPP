@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //JSX
 import "./splashscreen.css";
 import { useSession } from "../../../hooks/Session";
@@ -34,7 +35,7 @@ const SplashScreen = ({children}) => {
   return (
     <section className="SplashScreen">
       <div>
-        <h1>Snippets Market V1</h1>
+        <h1>Note App V1</h1>
         <h2>Initialized: {app.initialized && "OK"}</h2>
         <h2>Time Elapsed: {app.minTimeElapsed && "OK" } </h2>
       </div>

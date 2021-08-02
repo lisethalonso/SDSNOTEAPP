@@ -25,7 +25,7 @@ let notasColeccion;
 
 module.exports.obtenerNotasUsuarioPorPagina = async (pagina, elementosPorPagina, id) => {
   try {
-    const _id = new ObjectId(id);
+    const _id = ObjectId(id);
     let filtro = {usuario: _id};
     let options = {
       skip: (pagina - 1) * elementosPorPagina,
@@ -62,8 +62,7 @@ module.exports.obtenerPorId = async (id) => {
 }
 
 module.exports.agregarNota = async (titulo, descripcion, palabrasClave, id) => {
-    const _id = new ObjectId(id);  
-    const fecha = new Date().getTime();
+  const fecha = new Date().getTime();
     try
     {
       let nuevaNota = 
@@ -72,7 +71,7 @@ module.exports.agregarNota = async (titulo, descripcion, palabrasClave, id) => {
         descripcion: descripcion,
         palabrasClave: palabrasClave.split(","),
         fechaCreacion: fecha,
-        usuario:_id
+        usuario:id
       };
 
       let resultado = await notasColeccion.insertOne(nuevaNota);

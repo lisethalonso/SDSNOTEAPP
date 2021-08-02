@@ -4,6 +4,7 @@ import {
   Route
 } from 'react-router-dom';
 
+
 import {SessionProvider, useSession} from './hooks/Session';
 import mainReducer from "./store/";
 
@@ -13,13 +14,11 @@ import Menu from './components/shared/Menu/';
 
 import SplashScreen from './components/public/SplashScreen/';
 import Home from './components/public/Home';
-import LoginPage from './components/public/Login/';
-import SiginPage from './components/public/Signin/';
+import IniciarSesion from './components/public/IniciarSesion';
+import Registate from './components/public/Registrate';
 /* Private Pages */
-import MySnippetsPage from './components/private/MySnippets';
-import MySnippetPage from './components/private/MySnippet';
+import MisNotas from './components/private/Notas';
 import AddSnippetPage from './components/private/AddSnippet';
-import Dashboard from './components/private/Dashboard';
 import Profile from './components/private/Profile';
 
 import './App.css';
@@ -33,13 +32,10 @@ function App() {
           <div className="App">
               <Switch>
                   <Route exact path="/" component={Home}></Route>
-                  <Route exact path="/login" component={LoginPage}></Route>
-                  <Route exact path="/sigin" component={SiginPage}></Route>
-
-                  <PrivateRoute exact path="/mysnippets" component={MySnippetsPage}></PrivateRoute>
-                  <PrivateRoute exact path="/mysnippet" component={MySnippetPage}></PrivateRoute>
+                  <Route exact path="/iniciarSesion" component={IniciarSesion}></Route>
+                  <Route exact path="/registrate" component={Registate}></Route>
+                  <PrivateRoute exact path="/misNotas" component={MisNotas}></PrivateRoute>
                   <PrivateRoute exact path="/addsnippet" component={AddSnippetPage}></PrivateRoute>
-                  <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
                   <PrivateRoute exact path="/profile" component={Profile}></PrivateRoute>
               </Switch>
               <Menu login={false}></Menu>
