@@ -15,9 +15,7 @@
 }
 .Menu li{
   flex:1;
-  border-right-color: #fff;
-  border-right-style: solid;
-  border-width: 1px;
+  border-right: solid #fff 0.5px;
 }
 .Menu li a, .Menu li a:visited{
   display: flex;

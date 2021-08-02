@@ -26,12 +26,13 @@ const AddNota = ()=> {
       {titulo: titulo, descripcion: descripcion, palabrasClave: palabrasClave, usuario: user.usuario._id});
       dispatch({type:ADD_NOTA_REGISTRADO, payload:data});
       routeHistory.replace(from);
-    } catch(ex){
+    } 
+    catch(ex)
+    {
       //Dispacth del error
     }
   }
   
-
   return (
     <Page showHeader title="Nuevo">
       <section>

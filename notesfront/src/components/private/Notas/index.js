@@ -11,21 +11,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import './Notas.css';
 
-const Notas = ()=>{
-  /*
-  pagina: 0,
-  paginas: 0,
-  cantidad: 10,
-  error: "",
-  notas: [],
-  filtro: {},
-  fetching: false,
-  tieneMas: true,
-  idActual: null,
-  redireccionar:false,
-  notaActual: null,
-  scrollto:0,
-  */
+const Notas = () => {
 
   const [{ nota, sec }, dispatch] = useSession();
   const { pagina, cantidad, notas, fetching, tieneMas, redireccionar, scrollto} = nota;
@@ -34,7 +20,6 @@ const Notas = ()=>{
     if(!fetching && tieneMas){
       try 
       {
-        console.log(pagina, paginaCargar);
         const paginaIndex = pagina + 1;
         dispatch({ type: NOTA_FETCHING });
         let {data} = await privateaxios.get(`/api/notas/obtenerNotasUsuario/${paginaIndex}/${cantidad}/${sec.user.usuario._id}`);
@@ -57,7 +42,7 @@ const Notas = ()=>{
 
   useEffect(()=>{
     scrollParentRef.current.scrollTo(0, scrollto);
-  }, []);
+  }, [notas]);
   if (redireccionar) 
   {
     return (<Redirect to="/miNota"></Redirect>);
@@ -65,13 +50,15 @@ const Notas = ()=>{
 
   const listadoNotas = notas.map((o,i)=>{
     return (
-      <li key={o._id + i} className="listItem">
-        <span className="listDetail">
-          <span>{o.titulo}</span>
-          <span>{o.descripcion}</span>
-          <span>{o.palabrasClave}</span>
-          <span>{o.fechaCreacion}</span>
-        </span>
+      <li key={o._id + i} className="card">
+        <h2>Titulo</h2>
+        <p>{o.titulo}</p>
+        <h2>Descripción</h2>
+        <p>{o.descripcion}</p>
+        <h2>Palabras Clave</h2>
+        <p>{o.palabrasClave}</p>
+        <h2>Fecha de Creación</h2> 
+        <p>{o.fechaCreacion}</p>
         <span onClick={()=>onClickHandler(o._id)}><MdRemoveRedEye/></span>
       </li>
     );
@@ -89,7 +76,7 @@ const Notas = ()=>{
           element="section"
           useWindow={false}
         >
-          <ul className="listHolder">
+          <ul className="cards">
             {listadoNotas}
           </ul>
         </InfiniteScroll>
