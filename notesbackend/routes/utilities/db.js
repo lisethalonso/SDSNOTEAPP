@@ -7,21 +7,29 @@ const mongodb = process.env.MONGODB;
 const mongoUri = `mongodb+srv://${userName}:${password}@${mongohost}?retryWrites=true&w=majority`
 const mongoParams = { useUnifiedTopology: true };
 
-class MongoDB{
-  static async getDB(){
-    if (!_db) {
-      try {
+class MongoDB
+{
+  static async getDB()
+  {
+    if (!_db) 
+    {
+      try 
+      {
         let client = await mongoClient.connect(
           mongoUri,
           mongoParams
         );
         _db = client.db(mongodb);
         return _db;
-      } catch (ex){
+      } 
+      catch (ex)
+      {
         console.log(ex);
         throw(ex);
       }
-    } else {
+    } 
+    else 
+    {
       return _db;
     }
   }
