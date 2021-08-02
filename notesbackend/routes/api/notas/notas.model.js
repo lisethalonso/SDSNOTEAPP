@@ -25,8 +25,7 @@ let notasColeccion;
 
 module.exports.obtenerNotasUsuarioPorPagina = async (pagina, elementosPorPagina, id) => {
   try {
-    const _id = ObjectId(id);
-    let filtro = {usuario: _id};
+    let filtro = {usuario: id};
     let options = {
       skip: (pagina - 1) * elementosPorPagina,
       limit: elementosPorPagina,

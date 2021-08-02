@@ -1,4 +1,4 @@
-let Nota = {
+let notasVacio = {
   pagina: 0,
   paginas: 0,
   cantidad: 10,
@@ -21,7 +21,7 @@ export const NOTA_SETCURRENT = "NOTA_SETCURRENT";
 export const NOTA_CURRENT_LOAD = "NOTA_CURRENT_LOAD";
 
 
-const notaReducer = (state = Nota, action = {}) => {
+const notaReducer = (state = notasVacio, action = {}) => {
   switch(action.type)
   {
     case NOTA_FETCHING:
@@ -48,7 +48,7 @@ const notaReducer = (state = Nota, action = {}) => {
         tieneMas: tieneMas,
       }
     case NOTA_RESET:
-      return Nota;
+      return notasVacio;
     case NOTA_ERROR:
       const {error} = action.payload;
       return {

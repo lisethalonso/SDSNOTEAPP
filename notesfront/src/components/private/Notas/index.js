@@ -12,6 +12,20 @@ import InfiniteScroll from 'react-infinite-scroller';
 import './Notas.css';
 
 const Notas = ()=>{
+  /*
+  pagina: 0,
+  paginas: 0,
+  cantidad: 10,
+  error: "",
+  notas: [],
+  filtro: {},
+  fetching: false,
+  tieneMas: true,
+  idActual: null,
+  redireccionar:false,
+  notaActual: null,
+  scrollto:0,
+  */
 
   const [{ nota, sec }, dispatch] = useSession();
   const { pagina, cantidad, notas, fetching, tieneMas, redireccionar, scrollto} = nota;
@@ -20,14 +34,12 @@ const Notas = ()=>{
     if(!fetching && tieneMas){
       try 
       {
-        let obj = JSON.parse(localStorage.getItem('sec_str'));
-        let id = obj.user.usuario._id;
         console.log(pagina, paginaCargar);
         const paginaIndex = pagina + 1;
         dispatch({ type: NOTA_FETCHING });
-        let data = await privateaxios.get(`/api/notas/obtenerNotasUsuario/${paginaIndex}/${cantidad}/${id}`);
+        let {data} = await privateaxios.get(`/api/notas/obtenerNotasUsuario/${paginaIndex}/${cantidad}/${sec.user.usuario._id}`);
         console.log(data);
-        //dispatch({ type: NOTA_LOAD, payload: data });
+        dispatch({ type: NOTA_LOAD, payload: data });
       } 
       catch (ex) 
       {
@@ -57,7 +69,7 @@ const Notas = ()=>{
         <span className="listDetail">
           <span>{o.titulo}</span>
           <span>{o.descripcion}</span>
-          <span>{o.PalabrasClave}</span>
+          <span>{o.palabrasClave}</span>
           <span>{o.fechaCreacion}</span>
         </span>
         <span onClick={()=>onClickHandler(o._id)}><MdRemoveRedEye/></span>

@@ -18,7 +18,7 @@ import IniciarSesion from './components/public/IniciarSesion';
 import Registate from './components/public/Registrate';
 /* Private Pages */
 import MisNotas from './components/private/Notas';
-import AddSnippetPage from './components/private/AddSnippet';
+import AddNota from './components/private/AddNota';
 import Profile from './components/private/Profile';
 
 import './App.css';
@@ -35,7 +35,7 @@ function App() {
                   <Route exact path="/iniciarSesion" component={IniciarSesion}></Route>
                   <Route exact path="/registrate" component={Registate}></Route>
                   <PrivateRoute exact path="/misNotas" component={MisNotas}></PrivateRoute>
-                  <PrivateRoute exact path="/addsnippet" component={AddSnippetPage}></PrivateRoute>
+                  <PrivateRoute exact path="/addNota" component={AddNota}></PrivateRoute>
                   <PrivateRoute exact path="/profile" component={Profile}></PrivateRoute>
               </Switch>
               <Menu login={false}></Menu>

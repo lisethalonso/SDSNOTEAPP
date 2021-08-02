@@ -50,8 +50,8 @@ router.post(
   async (req, res)=>{
     try
     {
-      let {titulo, descripcion, palabrasClave} = req.body;
-      let documentoInsertado = await agregarNota(titulo, descripcion, palabrasClave, req.user._id);
+      let {titulo, descripcion, palabrasClave, usuario} = req.body;
+      let documentoInsertado = await agregarNota(titulo, descripcion, palabrasClave, usuario);
       res.status(200).json(documentoInsertado);
     }
     catch(ex)

@@ -9,12 +9,12 @@ import { privateaxios } from '../../../store/axios';
 
 import './AddSnippet.css';
 
-const AddSnippet = ()=> {
+const AddNota = ()=> {
   const [titulo, setTitulo] = useState();
   const [descripcion, setDescripcion] = useState();
   const [palabrasClave, setPalabrasClave] = useState();
   const routeHistory = useHistory();
-  let { from } = { from : {pathname:"/mysnippets"}};
+  let { from } = { from : {pathname:"/misNotas"}};
   const [{ addNota, sec }, dispatch] = useSession();
   let user = sec.user;
 
@@ -22,8 +22,8 @@ const AddSnippet = ()=> {
     e.preventDefault();
     e.stopPropagation();
     try{
-      const { data } = await privateaxios.post("/api/snippets/new", 
-      {titulo: titulo, descripcion: descripcion, palabrasClave: palabrasClave, user: user.user.email});
+      const { data } = await privateaxios.post("/api/notas/agregarNota", 
+      {titulo: titulo, descripcion: descripcion, palabrasClave: palabrasClave, usuario: user.usuario._id});
       dispatch({type:ADD_NOTA_REGISTRADO, payload:data});
       routeHistory.replace(from);
     } catch(ex){
@@ -75,4 +75,4 @@ const AddSnippet = ()=> {
     );
 }
 
-export default AddSnippet;
+export default AddNota;
