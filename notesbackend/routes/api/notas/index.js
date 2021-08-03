@@ -118,7 +118,7 @@ router.update (
     try 
     {
       const { id } = req.params;
-      let resultado = await actualizarPorId(id);
+      let resultado = await actualizarPorId(id ,titulo, descripcion, palabraClave);
       res.status(200).json(resultado);
     } 
     catch (ex) 
