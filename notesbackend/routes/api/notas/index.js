@@ -112,5 +112,21 @@ router.delete(
   }
 );
 
+router.update (
+  "/actualizar/:id",
+  async (req, res) => {
+    try 
+    {
+      const { id } = req.params;
+      let resultado = await actualizarPorId(id);
+      res.status(200).json(resultado);
+    } 
+    catch (ex) 
+    {
+      res.status(500).json({ "msg": "Error" });
+    }
+  }
+);
+
 
 module.exports = router;
