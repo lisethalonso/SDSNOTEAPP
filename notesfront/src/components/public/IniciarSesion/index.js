@@ -60,9 +60,7 @@ const IniciarSesion = () => {
           onChange={(e)=>{setContrasenia(e.target.value)}}>
         </DataField>
 
-        <section style={{padding:"1rem"}}>
-          <Button onClick={onClickHandler}>Iniciar Sesión</Button>
-        </section>
+        <Button onClick={onClickHandler}>Iniciar Sesión</Button>
 
     </Page>
   )

@@ -18,9 +18,7 @@ const Menu = ()=>{
     return (
       <ul className="Menu">
         <li><NavLink to="/misNotas">Mis Notas</NavLink></li>
-        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
         <li><NavLink to="/perfil">Perfil</NavLink></li>
-        <li><a>Upload</a></li>
       </ul>
     );
   }

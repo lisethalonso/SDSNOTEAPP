@@ -41,6 +41,12 @@ const MiNota = () => {
     return (<span key={i} className="palabrasClave">{o}</span>);
   });
 
+  const formatearFecha = (fecha)=>{
+    let nuevaFecha = new Date(fecha);
+    nuevaFecha = nuevaFecha.toLocaleDateString();
+    return nuevaFecha;
+  }
+
   /*
   const comments = notaActual.comments.map((o,i)=>{
     return (
@@ -55,17 +61,16 @@ const MiNota = () => {
   */
   return (
     <Page title="Nota" showHeader>
-      <pre className="pre">
-        {notaActual.titulo}
-      </pre>
-      <section className="contenedorDescripcion">
-        <h2>Descripción</h2>
-        {notaActual.descripcion}
-      </section>
+      <h2>Titulo</h2>
+      <p>{notaActual.titulo}</p>
+      <h2>Descripción</h2>
+      <p>{notaActual.descripcion}</p>
+      <h2>Palabras Claves</h2>
       <section className="contenedorPalabras">
-        <h2>Palabras Claves</h2>
         {claves}
       </section>
+      <h2>Fecha de Creación</h2>
+      <p>{notaActual.fechaCreacion=formatearFecha(notaActual.fechaCreacion)}</p>
       <Link to="/misNotas" className="btn">Regresar</Link>
     </Page>
   )

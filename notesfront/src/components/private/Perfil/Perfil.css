@@ -2,9 +2,11 @@
     display: block;
     text-align: center;
     font-size: 8rem;
-    padding-top: 2rem;
+    color: rgb(241, 241, 241);
 }
 
-h2{
+.userCorreo{
     text-align: center;
+    color: rgb(241, 241, 241);
+    margin-bottom: 2rem;
 }

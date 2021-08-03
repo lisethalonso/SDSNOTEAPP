@@ -22,11 +22,11 @@ const Profile = () => {
 
   return (
     <Page showHeader title="Perfil">
+      <div className="userContainer">
       <span className="userIcon"><RiUser3Fill/></span>
-      <h2>Correo: {sec.user.usuario.correo}</h2>
-      <section style={{padding:"1rem"}}>
+      <h2 className="userCorreo">Correo: {sec.user.usuario.correo}</h2>
           <Button onClick={onClickHandler}>Cerrar Sesión</Button>
-        </section>
+      </div>
     </Page>
   )
 }

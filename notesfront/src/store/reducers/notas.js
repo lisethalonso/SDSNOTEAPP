@@ -5,6 +5,7 @@ let notasVacio = {
   fetching: false,
   idActual: null,
   redireccionar:false,
+  redireccionarEditar:false,
   notaActual: null
 }
 
@@ -13,6 +14,7 @@ export const NOTA_LOAD = "NOTA_LOAD";
 export const NOTA_RESET = "NOTA_FETCHING";
 export const NOTA_ERROR = "NOTA_ERROR";
 export const NOTA_SETCURRENT = "NOTA_SETCURRENT";
+export const NOTA_SET_EDIT = "NOTA_SET_EDIT";
 export const NOTA_CURRENT_LOAD = "NOTA_CURRENT_LOAD";
 
 
@@ -47,12 +49,20 @@ const notaReducer = (state = notasVacio, action = {}) => {
         ...state,
         idActual: action.payload._id,
         redireccionar: true,
+        redireccionarEditar: false
+      }
+    case NOTA_SET_EDIT:
+      return {
+        ...state,
+        idActual: action.payload._id,
+        redireccionarEditar: true,
       }
     case NOTA_CURRENT_LOAD:
       return {
         ...state,
         notaActual: action.payload,
         redireccionar: false,
+        redireccionarEditar: false
       }
     default:
       return state;

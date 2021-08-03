@@ -1,25 +1,35 @@
-*{
-  text-align: center;
+.contenedorPalabras
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .palabrasClave {
   display: inline-block;
-  padding:0.5rem 1rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
   border-radius: 1.5rem;
   color:#fff;
   background-color: #2b7a59;
   box-shadow: 1px 1px 5px #333;
 }
 
-.contenedorDescripcion{
-  padding:1rem 1rem;
+h2, p
+{
+  text-align: center;
 }
 
-.contenedorPalabras{
-  padding:1rem 1rem;
-  margin-bottom: 0.5rem;
+h2
+{
+  color:white
+}
+
+p
+{
+  color: white;
+  text-align: center;
 }
 
 .btn{
@@ -32,9 +42,4 @@
   margin-top: 1rem;
   text-align: center;
   border-radius: 25px;
-}
-.pre{
-  background-color: #aaa;
-  padding:1rem 0.5rem;
-  box-shadow: 1px 1px 5px #333;
 }

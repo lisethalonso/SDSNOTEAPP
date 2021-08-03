@@ -1,10 +1,10 @@
-import { MdRemoveRedEye, MdAddCircleOutline, MdDelete} from 'react-icons/md';
+import { MdRemoveRedEye, MdAddCircleOutline, MdDelete, MdEdit} from 'react-icons/md';
 
 import Page from '../../shared/Page/Page';
 import {useEffect, useRef, useState} from 'react';
 import {privateaxios} from '../../../store/axios';
 import { useSession } from '../../../hooks/Session';
-import { NOTA_FETCHING, NOTA_LOAD, NOTA_SETCURRENT } from '../../../store/reducers/notas';
+import { NOTA_FETCHING, NOTA_LOAD, NOTA_SETCURRENT , NOTA_SET_EDIT} from '../../../store/reducers/notas';
 import {Redirect, Link} from 'react-router-dom';
 
 import './Notas.css';
@@ -50,9 +50,19 @@ const Notas = () => {
     }
   }
 
+  const editarNota = (_id) => 
+  {
+    dispatch({ type: NOTA_SET_EDIT, payload: { _id: _id}});
+  }
+
   if (nota.redireccionar) 
   {
     return (<Redirect to="/miNota"></Redirect>);
+  }
+
+  if (nota.redireccionarEditar) 
+  {
+    return (<Redirect to="/perfil"></Redirect>);
   }
 
   const formatearFecha = (fecha)=>{
@@ -64,8 +74,11 @@ const Notas = () => {
   const listadoNotas = nota.notas.map((o,i)=>{
     return (
       <li key={o._id + i} className="card">
-        <span className="viewIcon" onClick={()=>redirect(o._id)}><MdRemoveRedEye/></span>
-        <span className="deleteIcon" onClick={()=>eliminarNota(o._id)}><MdDelete/></span>
+        <div class="icons">
+          <span className="viewIcon" onClick={()=>redirect(o._id)}><MdRemoveRedEye/></span>
+          <span className="editIcon" onClick={()=>editarNota(o._id)}><MdEdit/></span>
+          <span className="deleteIcon" onClick={()=>eliminarNota(o._id)}><MdDelete/></span>
+        </div>
         <h2>Titulo</h2>
         <p>{o.titulo}</p>
         <h2>Descripción</h2>
