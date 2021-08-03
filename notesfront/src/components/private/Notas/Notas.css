@@ -15,7 +15,6 @@
   align-items: center;
   background-color: #333333;
   color: rgb(240, 240, 240);
-  z-index: 1;
 }
 
 .card h2, .card p, .card span
@@ -52,6 +51,7 @@
   box-shadow: 1px 1px 5px #000;
   border-radius: 50%;
   font-size: 1.5rem;
+  z-index: 1;
 }
 
 .viewIcon

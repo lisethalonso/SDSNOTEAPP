@@ -102,7 +102,6 @@ module.exports.agregarNota = async (titulo, descripcion, palabrasClave, id) => {
     }
 }
 
-
 module.exports.modificarNota = async (id, titulo, descripcion, palabrasClave) => {
   try
   {
