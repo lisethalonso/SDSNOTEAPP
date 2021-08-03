@@ -117,7 +117,7 @@ router.update (
   async (req, res) => {
     try 
     {
-      const { id } = req.params;
+      const { id ,titulo, descripcion, palabraClave } = req.params;
       let resultado = await actualizarPorId(id ,titulo, descripcion, palabraClave);
       res.status(200).json(resultado);
     } 
