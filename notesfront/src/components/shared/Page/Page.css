@@ -1,8 +1,15 @@
 .page{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
   margin-bottom:43.5px;
+  background-color: rgb(26, 26, 26);
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
+
 .withHeader{
-  margin-top:44px;
+  margin-top:43px;
   min-height:calc(100vh - 88px);
 }
 

@@ -23,6 +23,25 @@ let notasColeccion;
     }
 })();
 
+module.exports.obtenerNotasUsuario = async (id) => {
+  try {
+    let filtro = {usuario: id};
+    let options = {
+      projection: {titulo:1, descripcion:1, palabrasClave:1, fechaCreacion:1},
+      sort:[["titulo", 1]]
+    };
+
+    let docsCursor = notasColeccion.find(filtro, options);
+    let filas = await docsCursor.toArray()
+    return filas;
+  } 
+  catch (ex) 
+  {
+    console.log(ex);
+    throw (ex);
+  }
+}
+
 module.exports.obtenerNotasUsuarioPorPagina = async (pagina, elementosPorPagina, id) => {
   try {
     let filtro = {usuario: id};
@@ -82,7 +101,6 @@ module.exports.agregarNota = async (titulo, descripcion, palabrasClave, id) => {
       throw(ex);
     }
 }
-
 
 module.exports.modificarNota = async (id, titulo, descripcion, palabrasClave) => {
   try

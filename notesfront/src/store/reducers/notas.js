@@ -1,16 +1,12 @@
 let notasVacio = {
-  pagina: 0,
-  paginas: 0,
-  cantidad: 10,
   error: "",
   notas: [],
   filtro: {},
   fetching: false,
-  tieneMas: true,
   idActual: null,
   redireccionar:false,
-  notaActual: null,
-  scrollto:0,
+  redireccionarEditar:false,
+  notaActual: null
 }
 
 export const NOTA_FETCHING = "NOTA_FETCHING";
@@ -18,6 +14,7 @@ export const NOTA_LOAD = "NOTA_LOAD";
 export const NOTA_RESET = "NOTA_FETCHING";
 export const NOTA_ERROR = "NOTA_ERROR";
 export const NOTA_SETCURRENT = "NOTA_SETCURRENT";
+export const NOTA_SET_EDIT = "NOTA_SET_EDIT";
 export const NOTA_CURRENT_LOAD = "NOTA_CURRENT_LOAD";
 
 
@@ -31,21 +28,13 @@ const notaReducer = (state = notasVacio, action = {}) => {
       }   
     case NOTA_LOAD:
       console.log(action.payload);
-      const {numeroFilas, filas, pagina, cantidad} = action.payload;
-      const paginas = Math.ceil(numeroFilas / cantidad);
-      console.log({numeroFilas, filas, cantidad, paginas, pagina});
-      const tieneMas = pagina <= paginas;
-      const nuevasFilas = [...state.notas, ...filas];
-
+      //const nuevasNotas = [...state.notas, ...action.payload.notas];
+      //console.log({numeroFilas, filas, cantidad, paginas, pagina});
       return {
         ...state,
         fetching:false,
-        pagina: pagina,
-        paginas: paginas,
-        cantidad: cantidad,
         error: "",
-        notas: nuevasFilas,
-        tieneMas: tieneMas,
+        notas: action.payload.notas
       }
     case NOTA_RESET:
       return notasVacio;
@@ -59,14 +48,21 @@ const notaReducer = (state = notasVacio, action = {}) => {
       return {
         ...state,
         idActual: action.payload._id,
-        scrollto:action.payload.scrollToY,
         redireccionar: true,
+        redireccionarEditar: false
+      }
+    case NOTA_SET_EDIT:
+      return {
+        ...state,
+        idActual: action.payload._id,
+        redireccionarEditar: true,
       }
     case NOTA_CURRENT_LOAD:
       return {
         ...state,
         notaActual: action.payload,
         redireccionar: false,
+        redireccionarEditar: false
       }
     default:
       return state;

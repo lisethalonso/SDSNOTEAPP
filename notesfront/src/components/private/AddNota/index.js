@@ -10,27 +10,36 @@ import { privateaxios } from '../../../store/axios';
 import './AddSnippet.css';
 
 const AddNota = ()=> {
-  const [titulo, setTitulo] = useState();
-  const [descripcion, setDescripcion] = useState();
-  const [palabrasClave, setPalabrasClave] = useState();
   const routeHistory = useHistory();
   let { from } = { from : {pathname:"/misNotas"}};
   const [{ addNota, sec }, dispatch] = useSession();
   let user = sec.user;
 
-  const onClickHandler = async (e)=>{
+  const [valoresFormulario, setValoresFormulario] = useState({
+    titulo:"",
+    descripcion: "",
+    palabrasClave: "",
+    usuario: user.usuario._id
+  });
+
+  const submitHandler = async (e) =>{
     e.preventDefault();
     e.stopPropagation();
+    //console.log(valoresFormulario);
     try{
-      const { data } = await privateaxios.post("/api/notas/agregarNota", 
-      {titulo: titulo, descripcion: descripcion, palabrasClave: palabrasClave, usuario: user.usuario._id});
+      const { data } = await privateaxios.post("/api/notas/agregarNota", valoresFormulario);
       dispatch({type:ADD_NOTA_REGISTRADO, payload:data});
       routeHistory.replace(from);
     } 
     catch(ex)
     {
-      //Dispacth del error
+      console.log(ex);
     }
+  }
+
+  const onChangeHandler =  (e)=>{
+    const {name, value} = e.target;
+    setValoresFormulario({...valoresFormulario, [name]: value})
   }
   
   return (
@@ -42,8 +51,8 @@ const AddNota = ()=> {
           placeholder="Titulo nota"
           type="text"
           labelText="Titulo"
-          value={titulo}
-          onChange={(e)=>{setTitulo(e.target.value)}}
+          value={valoresFormulario.titulo}
+          onChange={onChangeHandler}
         >
         </Field>
         <Field
@@ -52,8 +61,8 @@ const AddNota = ()=> {
           placeholder="Descripcion nota"
           type="textarea"
           labelText="Descripcion"
-          value={descripcion}
-          onChange={(e)=>setDescripcion(e.target.value)}
+          value={valoresFormulario.descripcion}
+          onChange={onChangeHandler}
           rows="10"
           style={{minHeight:"40vh"}}
         >
@@ -64,13 +73,13 @@ const AddNota = ()=> {
           placeholder="Etiquetas"
           type="text"
           labelText="Etiquetas"
-          value={palabrasClave}
-          onChange={(e)=>{setPalabrasClave(e.target.value)}}
+          value={valoresFormulario.palabrasClave}
+          onChange={onChangeHandler}
         >
         </Field>
       </section>
       <section style={{padding:"1rem"}}>
-          <Button onClick={onClickHandler}>Agregar Nota</Button>
+          <Button onClick={submitHandler}>Agregar Nota</Button>
         </section>
     </Page>
     );

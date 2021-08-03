@@ -55,9 +55,7 @@ const Registrate = ()=>{
           error=""
           onChange={(e)=>{ setContrasenia(e.target.value)}}>
         </DataField>
-        <section style={{padding:"1rem"}}>
-          <Button onClick={onClickHandler}>Registrarse</Button>
-        </section>
+        <Button onClick={onClickHandler}>Registrarse</Button>
     </Page>
   )
 }

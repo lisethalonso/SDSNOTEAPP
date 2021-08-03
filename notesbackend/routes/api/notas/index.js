@@ -6,11 +6,29 @@ const {
   agregarPalabrasClave,
   agregarPalabraClave,
   agregarNota,
+  obtenerNotasUsuario,
   obtenerNotasUsuarioPorPagina,
   modificarNota
 } = require('./notas.model');
 
 router.get(
+  "/obtenerNotasUsuario/:id",
+  async (req, res) => {
+    try 
+    {
+      let {id} = req.params;
+      let notas = await obtenerNotasUsuario(id);
+      res.status(200).json({notas});
+      console.log(req.user);
+    } 
+    catch (ex) 
+    {
+      res.status(500).json({ "msg": "Error" });
+    }
+  }
+);
+
+/*router.get(
   "/obtenerNotasUsuario/:pagina/:cantidad/:id",
   async (req, res) => {
     try 
@@ -27,7 +45,7 @@ router.get(
       res.status(500).json({ "msg": "Error" });
     }
   }
-);
+);*/
 
 router.get(
   "/porId/:id",
