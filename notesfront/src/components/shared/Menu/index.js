@@ -6,7 +6,7 @@ import {useSession} from '../../../hooks/Session';
 const Menu = ()=>{
   let [ {sec}, ] = useSession();
   let {path, ...match} = useRouteMatch();
-  console.log(path, match);
+  //console.log(path, match);
   if (!sec.isLogged){
     return (
       <ul className="Menu">
@@ -19,7 +19,7 @@ const Menu = ()=>{
       <ul className="Menu">
         <li><NavLink to="/misNotas">Mis Notas</NavLink></li>
         <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-        <li><NavLink to="/profile">Profile</NavLink></li>
+        <li><NavLink to="/perfil">Perfil</NavLink></li>
         <li><a>Upload</a></li>
       </ul>
     );

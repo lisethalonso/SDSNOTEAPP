@@ -1,16 +1,11 @@
 let notasVacio = {
-  pagina: 0,
-  paginas: 0,
-  cantidad: 10,
   error: "",
   notas: [],
   filtro: {},
   fetching: false,
-  tieneMas: true,
   idActual: null,
   redireccionar:false,
-  notaActual: null,
-  scrollto:0,
+  notaActual: null
 }
 
 export const NOTA_FETCHING = "NOTA_FETCHING";
@@ -31,21 +26,13 @@ const notaReducer = (state = notasVacio, action = {}) => {
       }   
     case NOTA_LOAD:
       console.log(action.payload);
-      const {numeroFilas, filas, pagina, cantidad} = action.payload;
-      const paginas = Math.ceil(numeroFilas / cantidad);
-      console.log({numeroFilas, filas, cantidad, paginas, pagina});
-      const tieneMas = pagina <= paginas;
-      const nuevasFilas = [...state.notas, ...filas];
-
+      //const nuevasNotas = [...state.notas, ...action.payload.notas];
+      //console.log({numeroFilas, filas, cantidad, paginas, pagina});
       return {
         ...state,
         fetching:false,
-        pagina: pagina,
-        paginas: paginas,
-        cantidad: cantidad,
         error: "",
-        notas: nuevasFilas,
-        tieneMas: tieneMas,
+        notas: action.payload.notas
       }
     case NOTA_RESET:
       return notasVacio;
@@ -59,7 +46,6 @@ const notaReducer = (state = notasVacio, action = {}) => {
       return {
         ...state,
         idActual: action.payload._id,
-        scrollto:action.payload.scrollToY,
         redireccionar: true,
       }
     case NOTA_CURRENT_LOAD:

@@ -1,0 +1,40 @@
+*{
+  text-align: center;
+}
+
+.palabrasClave {
+  display: inline-block;
+  padding:0.5rem 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1.5rem;
+  color:#fff;
+  background-color: #2b7a59;
+  box-shadow: 1px 1px 5px #333;
+}
+
+.contenedorDescripcion{
+  padding:1rem 1rem;
+}
+
+.contenedorPalabras{
+  padding:1rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.btn{
+  width: 100%;
+  background-color: #333;
+  color:#fff;
+  text-decoration: none;
+  cursor: pointer;
+  padding:0.85rem 1rem;
+  margin-top: 1rem;
+  text-align: center;
+  border-radius: 25px;
+}
+.pre{
+  background-color: #aaa;
+  padding:1rem 0.5rem;
+  box-shadow: 1px 1px 5px #333;
+}

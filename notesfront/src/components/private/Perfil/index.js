@@ -3,14 +3,16 @@ import Button from '../../shared/Buttons/Button';
 import { useHistory } from 'react-router-dom';
 import { useSession } from '../../../hooks/Session';
 import { SEC_LOGOUT } from '../../../store/reducers/sec';
+import { RiUser3Fill} from 'react-icons/ri';
 
+import './Perfil.css';
 
 const Profile = () => {
   let { from } = { from : {pathname:"/"}};
   const routeHistory = useHistory();
   const [{ sec }, dispatch] = useSession();
 
-  const onClickHandler = async (e)=>{
+  const onClickHandler = (e)=>{
     e.preventDefault();
     e.stopPropagation();
     dispatch({ type: SEC_LOGOUT });
@@ -19,8 +21,9 @@ const Profile = () => {
   };
 
   return (
-    <Page showHeader title="Profile">
-      <h2>Profile</h2>
+    <Page showHeader title="Perfil">
+      <span className="userIcon"><RiUser3Fill/></span>
+      <h2>Correo: {sec.user.usuario.correo}</h2>
       <section style={{padding:"1rem"}}>
           <Button onClick={onClickHandler}>Cerrar Sesión</Button>
         </section>
