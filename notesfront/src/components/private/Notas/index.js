@@ -1,4 +1,4 @@
-import { MdRemoveRedEye, MdAddCircleOutline} from 'react-icons/md';
+import { MdRemoveRedEye, MdAddCircleOutline, MdDelete } from 'react-icons/md';
 
 import Page from '../../shared/Page/Page';
 import {useEffect, useRef} from 'react';
@@ -33,12 +33,27 @@ const Notas = () => {
     }
   }
 
-  const onClickHandler = (_id) => 
-  {
+  const redirect = (_id) => {
     const scrollToY = scrollParentRef.current.scrollTop;
     dispatch({ type: NOTA_SETCURRENT, payload: { _id: _id, scrollToY: scrollToY}});
   }
   const scrollParentRef = useRef();
+
+
+  const eliminarElemento = async (_id) => {
+    try
+    {
+      console.log(_id);
+      let {data} = await privateaxios.delete(`/api/notas/eliminar/${_id}`);
+      console.log(data);
+      window.location.reload();
+    }
+    catch(ex)
+    {
+      //dispatch del error
+    }
+   
+  }
 
   useEffect(()=>{
     scrollParentRef.current.scrollTo(0, scrollto);
@@ -51,6 +66,8 @@ const Notas = () => {
   const listadoNotas = notas.map((o,i)=>{
     return (
       <li key={o._id + i} className="card">
+        <span className="viewIcon" onClick={()=>redirect(o._id)}><MdRemoveRedEye/></span>
+        <span className="deleteIcon" onClick={()=>eliminarElemento(o._id)}><MdDelete/></span>
         <h2>Titulo</h2>
         <p>{o.titulo}</p>
         <h2>Descripción</h2>
@@ -59,7 +76,6 @@ const Notas = () => {
         <p>{o.palabrasClave}</p>
         <h2>Fecha de Creación</h2> 
         <p>{o.fechaCreacion}</p>
-        <span onClick={()=>onClickHandler(o._id)}><MdRemoveRedEye/></span>
       </li>
     );
   });

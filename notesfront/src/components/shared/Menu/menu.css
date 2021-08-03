@@ -12,6 +12,7 @@
   color:#fff;
   width:100%;
   font-size: 0.8rem;
+  z-index: 1;
 }
 .Menu li{
   flex:1;

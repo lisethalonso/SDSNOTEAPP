@@ -8,12 +8,14 @@
 
 .card
 {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   background-color: #333333;
   color: rgb(240, 240, 240);
+  z-index: 1;
 }
 
 .card h2, .card p, .card span
@@ -25,8 +27,7 @@
 
 .cards h2
 {
-  font-size: 1rem;
-  
+  font-size: 1rem;  
 }
 
 .listDetail{
@@ -36,7 +37,6 @@
   flex-direction: row;
   width:calc(100% - 64px);
 }
-
 
 .addBtn{
   width: 32px;
@@ -52,4 +52,22 @@
   box-shadow: 1px 1px 5px #000;
   border-radius: 50%;
   font-size: 1.5rem;
+}
+
+.viewIcon
+{
+  cursor: pointer;
+  position: absolute;
+  font-size: 1.3em;
+  right: 40px;
+  top: 0px;
+}
+
+.deleteIcon
+{
+  cursor: pointer;
+  font-size: 1.3em;
+  position: absolute;
+  top: 0px;
+  right: 10px;
 }
